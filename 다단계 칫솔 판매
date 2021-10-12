@@ -1,24 +1,32 @@
+import math
+
 def solution(enroll, referral, seller, amount):
-    answer = []
-    dicts = {}
-    tree_dicts = {}
+    answer = [0] * len(enroll)
+    name_dic = {}
+    
     for i in range(len(enroll)):
-        tree_dicts[enroll[i]] = referral[i]
-        dicts[enroll[i]] = 0
+        name_dic[enroll[i]] = (referral[i], i)
+    
+    for i in range(len(seller)):
+        cp, ca = seller[i], amount[i] * 100
+        up, ci = name_dic[cp]
+        sh = math.floor(ca * 0.1)
 
-    for i in range(len(seller)) :
-        cost = amount[i]*100
-        node = seller[i]
-        while node != '-':
-            parent = tree_dicts[node]
-            if cost*0.1 < 1:
-                dicts[node] += cost
-                break
-            dicts[node] += (cost-(cost//10))
-            cost //= 10
-            node = parent
+        answer[ci] += ca - sh
+        while not (sh == 0 or up == "-"):
+            ca = sh
+            up, ci = name_dic[up]
+            sh = math.floor(ca * 0.1)
 
+            answer[ci] += ca - sh
 
-    for name in enroll :
-        answer.append(int(dicts[name]))
     return answer
+
+
+
+enroll = ["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"]
+referral = ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"]
+seller = ["young", "john", "tod", "emily", "mary"]
+amount = [12, 4, 2, 5, 10]
+
+print(solution(enroll, referral, seller, amount))
