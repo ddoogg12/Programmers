@@ -1,0 +1,27 @@
+# 프로그래머스
+def solution(lottos, win_nums):
+    
+    min_count = 0 #최저순위
+    max_count = 0 #최고순위
+    rank = {0 : 6, 1 : 6, 2 : 5, 3 : 4, 4 : 3, 5 : 2, 6 : 1} #로또 등수
+    
+    # 0이 아닌 수 중 로또 번호와 맞는 카운트가 최저순위
+    for i in lottos:
+        if i in win_nums:
+            min_count += 1
+    
+    # 최저순위와 0의 수를 합한것이 최고순위
+    max_count = lottos.count(0) + min_count
+    answer = []
+    answer.append(rank[max_count])
+    answer.append(rank[min_count])
+
+    return answer
+
+
+
+
+lottos = [44, 1, 0, 0, 31, 25]
+win_nums = [31, 10, 45, 1, 6, 19]
+
+print(solution(lottos, win_nums))
