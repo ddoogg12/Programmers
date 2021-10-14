@@ -1,0 +1,29 @@
+#해결 방안
+# 1. 해쉬로 구현하면 간단하게 해결 가능
+
+def solution(record):
+    answer = []
+    temp = {} # 임시로 저장할 해쉬
+    for i in range(len(record)):
+        record[i] = record[i].split(' ')
+    
+    for i in record:
+        if i[0] == "Enter":
+            temp[i[1]] = i[2]
+        elif i[0] == "Change":
+            temp[i[1]] = i[2]
+    
+    for i in record:
+        if i[0] == "Enter":
+            s = temp[i[1]]+"님이 들어왔습니다."
+            answer.append(s)
+        elif i[0] == "Leave":
+            s = temp[i[1]]+"님이 나갔습니다."
+            answer.append(s)
+    return answer
+
+
+
+
+record = ["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]
+print(solution(record))
