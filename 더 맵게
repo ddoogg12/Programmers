@@ -1,0 +1,47 @@
+#힙을 구현하여 해결해야함
+#처음에는 데크로 했다가 실패해서 힙을 통해 구현
+
+    
+#효율성 실패    
+import heapq
+def solution(scoville, K):
+    #주어진 리스트를 힙구조로 변환
+    heapq.heapify(scoville)
+    answer = 0
+
+    while len(scoville) >= 2:
+        if min(scoville) >= K:
+            break
+        else:
+            answer += 1
+            min_1 = heapq.heappop(scoville)
+            min_2 = heapq.heappop(scoville)
+            heapq.heappush(scoville, min_1 + ( min_2 * 2))
+
+    if min(scoville) < K:
+        answer = -1
+
+    return answer
+    
+    
+# 정답
+import heapq
+def solution(scoville, K):
+    #주어진 리스트를 힙구조로 변환
+    heapq.heapify(scoville)
+    answer = 0
+
+    while scoville[0] < K:
+        mix = heapq.heappop(scoville) + (heapq.heappop(scoville) * 2)
+        heapq.heappush(scoville, mix)
+        answer += 1
+        if len(scoville) == 1 and scoville[0] < K:
+            return -1
+    return answer
+    
+    
+    
+scoville = [1, 2, 3, 9, 10, 12]
+k = 7
+
+print(solution(scoville, k))
